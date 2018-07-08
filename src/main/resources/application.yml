@@ -1,0 +1,10 @@
+#APACHE
+server:
+  port: 8070
+
+
+#EUREKA
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
