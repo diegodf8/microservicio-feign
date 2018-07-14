@@ -15,9 +15,8 @@ public class Usuario {
     @GeneratedValue
     @Column(name ="id")
     private Long id;
-    @Column(name ="nombre")
-    private String nombre;
+    @Column(name ="login")
+    private String login;
     @Column(name ="password")
     private String password;
-
 }

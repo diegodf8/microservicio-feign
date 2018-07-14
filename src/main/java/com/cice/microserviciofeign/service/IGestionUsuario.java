@@ -12,6 +12,8 @@ public interface IGestionUsuario {
     Long getIdUsuario(String login, String password);
 
 
+    List<String> listaNombres();
+
     /**
      * Metodo que crea un usuario
      *
@@ -27,14 +29,16 @@ public interface IGestionUsuario {
      * @param id
      * @return
      */
-    boolean actualizarUsuario(Long id);
+    boolean actualizarUsuario(String id);
 
     /**
      * Metodo para eliminar un usuario de base de datos
      *
-     * @param login
+     * @param id
      * @return
      */
-    boolean eliminarUsuario(String login);
+    boolean eliminarUsuario(String id);
+
+    List<String> listaUsuarios();
 }
 
