@@ -1,6 +1,7 @@
 package com.cice.microserviciofeign.rest;
 
 
+import com.cice.microserviciofeign.feign.Productos;
 import com.cice.microserviciofeign.service.IGestionUsuario;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,11 +24,14 @@ public class UserResource {
     @Qualifier("Gestion")
     IGestionUsuario gestionUsuario;
 
+    @Autowired
+    Productos productos;
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Long> getUsuario(@PathParam(value = "login") String login,
                                            @PathParam(value = "password") String password) {
         gestionUsuario.listaUsuarios().stream().forEach(x -> System.out.println("Usuario: " + x));
-        gestionUsuario.getIdUsuario(login, password);
+        System.out.println("Lista de productos " + productos.getProductos("1"));
         return new ResponseEntity<Long>(gestionUsuario.getIdUsuario(login, password), HttpStatus.ACCEPTED);
     }
 
