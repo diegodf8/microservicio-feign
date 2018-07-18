@@ -2,13 +2,14 @@ package com.cice.microserviciofeign.service;
 
 import com.cice.microserviciofeign.entity.Usuario;
 import com.cice.microserviciofeign.repository.UsuarioRepository;
+import com.cice.microserviciofeign.rest.dto.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("Gestion")
+@Service
 public class GestionUsuario implements IGestionUsuario{
 
     @Autowired
@@ -31,12 +32,12 @@ public class GestionUsuario implements IGestionUsuario{
     }
 
     @Override
-    public boolean crearUsuario(String login, String password) {
+    public UsuarioDTO crearUsuario(String login, String password) {
         Usuario usuario = new Usuario();
         usuario.setLogin(login);
         usuario.setPassword(password);
-        usuarioRepository.save(usuario);
-        return true;
+        Usuario result = usuarioRepository.save(usuario);
+        return new UsuarioDTO(result.getId(), result.getLogin(), result.getPassword());
     }
 
     @Override

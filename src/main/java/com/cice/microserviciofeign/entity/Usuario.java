@@ -11,12 +11,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
+
     @Id
     @GeneratedValue
     @Column(name ="id")
     private Long id;
+
     @Column(name ="login")
     private String login;
+
     @Column(name ="password")
     private String password;
 }

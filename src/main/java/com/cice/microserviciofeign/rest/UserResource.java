@@ -2,12 +2,15 @@ package com.cice.microserviciofeign.rest;
 
 
 import com.cice.microserviciofeign.feign.Productos;
+import com.cice.microserviciofeign.rest.dto.UsuarioDTO;
 import com.cice.microserviciofeign.service.IGestionUsuario;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.websocket.server.PathParam;
 
 //Controller
+@Slf4j
 @Api(value = "UsuarioRest", description = "API de Gestion de usuarios")
 @RestController("get-usuario")
 public class UserResource {
@@ -38,10 +42,11 @@ public class UserResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String crearUsuario(@PathParam(value = "login") String login,
-                               @PathParam(value = "password") String password) {
-        gestionUsuario.crearUsuario(login, password);
-        return "Usuario creado " + login;
+    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+
+        log.debug("Usuario recibido: ",usuarioDTO.toString());
+        UsuarioDTO result = gestionUsuario.crearUsuario(usuarioDTO.getLogin(),usuarioDTO.getPassword());
+        return ResponseEntity.ok(result);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

@@ -1,5 +1,7 @@
 package com.cice.microserviciofeign.service;
 
+import com.cice.microserviciofeign.rest.dto.UsuarioDTO;
+
 import java.util.List;
 
 public interface IGestionUsuario {
@@ -19,7 +21,7 @@ public interface IGestionUsuario {
      * @param login
      * @return
      */
-    boolean crearUsuario(String login, String password);
+    UsuarioDTO crearUsuario(String login, String password);
 
     /**
      * Metodo para actualizar  un usuario en base de datos
