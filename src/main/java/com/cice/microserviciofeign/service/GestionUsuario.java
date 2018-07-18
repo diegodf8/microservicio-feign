@@ -28,7 +28,6 @@ public class GestionUsuario implements IGestionUsuario{
         return usuarioRepository.findAll().stream().
                 map(usuario -> usuario.getLogin()).
                 collect(Collectors.toList());
-
     }
 
     @Override
@@ -63,5 +62,4 @@ public class GestionUsuario implements IGestionUsuario{
                 collect(Collectors.toList());
 
     }
-
 }

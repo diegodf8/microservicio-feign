@@ -11,7 +11,6 @@ public interface IGestionUsuario {
      */
     Long getIdUsuario(String login, String password);
 
-
     List<String> listaNombres();
 
     /**
@@ -21,7 +20,6 @@ public interface IGestionUsuario {
      * @return
      */
     boolean crearUsuario(String login, String password);
-
 
     /**
      * Metodo para actualizar  un usuario en base de datos

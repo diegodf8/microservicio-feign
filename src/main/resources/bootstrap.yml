@@ -1,6 +1,6 @@
 spring:
   application:
-    name: microUsuario
+    name: microusuario
   cloud:
     config:
       fail-fast: true
