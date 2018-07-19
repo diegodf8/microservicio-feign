@@ -13,6 +13,8 @@ public interface IGestionUsuario {
      */
     Long getIdUsuario(String login, String password);
 
+    UsuarioDTO getUsuario(Long idUsuario);
+
     List<String> listaNombres();
 
     /**

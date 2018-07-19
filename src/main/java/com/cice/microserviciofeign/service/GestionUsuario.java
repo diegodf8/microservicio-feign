@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,5 +63,19 @@ public class GestionUsuario implements IGestionUsuario{
                 map(usuario -> usuario.getLogin()).
                 collect(Collectors.toList());
 
+    }
+
+    @Override
+    public  UsuarioDTO getUsuario(Long idUsuario){
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(idUsuario);
+        UsuarioDTO usuarioDTO = null;
+        if(usuarioOptional.isPresent()){
+            usuarioDTO = new UsuarioDTO(
+                    usuarioOptional.get().getId(),
+                    usuarioOptional.get().getLogin(),
+                    usuarioOptional.get().getPassword()
+            );
+        }
+        return usuarioDTO;
     }
 }

@@ -8,30 +8,28 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 //Controller
 @Slf4j
-@Api(value = "UsuarioRest", description = "API de Gestion de usuarios")
 @RestController("get-usuario")
 public class UserResource {
 
     @Autowired
-    @Qualifier("Gestion")
     IGestionUsuario gestionUsuario;
 
     @Autowired
     Productos productos;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+   @RequestMapping(value = "health",method = RequestMethod.GET)
     public ResponseEntity<Long> getUsuario(@PathParam(value = "login") String login,
                                            @PathParam(value = "password") String password) {
         System.out.println(productos.getproductos("1"));
@@ -42,11 +40,14 @@ public class UserResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<Void> crearUsuario(@RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
 
-        log.debug("Usuario recibido: ",usuarioDTO.toString());
+        log.info("Usuario recibido: {}",usuarioDTO.toString());
         UsuarioDTO result = gestionUsuario.crearUsuario(usuarioDTO.getLogin(),usuarioDTO.getPassword());
-        return ResponseEntity.ok(result);
+        String location = String.format("http://localhost:8071/get-usuario/%s",result.getId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(new URI(location));
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
@@ -59,6 +60,11 @@ public class UserResource {
     public String actualizarUsuario(@PathParam(value = "id") String id) {
         gestionUsuario.actualizarUsuario(id);
         return "Usuario actualizado con id:" + id;
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public  ResponseEntity<UsuarioDTO> recuperarUsuarioPorId(@PathVariable(value = "id") Long id){
+       return ResponseEntity.ok(gestionUsuario.getUsuario(id));
     }
 
 
