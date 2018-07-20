@@ -12,6 +12,6 @@ import java.util.List;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Usuario findBylogin(String login);
-    //@Query("SELECT * FROM usuarios WHERE login = :login AND password = :password")
+    @Query(value = "SELECT * FROM usuarios WHERE login = :login AND password = :password", nativeQuery = true)
     Usuario findUsuarioByLoginAndPassword(@Param("login") String login, @Param("password") String password);
 }

@@ -78,4 +78,11 @@ public class GestionUsuario implements IGestionUsuario{
         }
         return usuarioDTO;
     }
+
+    @Override
+    public UsuarioDTO getUsuario(String login, String password) {
+
+        Usuario usuario = usuarioRepository.findUsuarioByLoginAndPassword(login, password);
+        return new UsuarioDTO(usuario.getId(),usuario.getLogin(),usuario.getPassword());
+    }
 }

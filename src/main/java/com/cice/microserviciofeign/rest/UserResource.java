@@ -1,6 +1,7 @@
 package com.cice.microserviciofeign.rest;
 
 
+import com.cice.microserviciofeign.entity.Usuario;
 import com.cice.microserviciofeign.feign.Productos;
 import com.cice.microserviciofeign.rest.dto.UsuarioDTO;
 import com.cice.microserviciofeign.service.IGestionUsuario;
@@ -28,7 +29,6 @@ public class UserResource {
     @Autowired
     Productos productos;
 
-
    @RequestMapping(value = "health",method = RequestMethod.GET)
     public ResponseEntity<Long> getUsuario(@PathParam(value = "login") String login,
                                            @PathParam(value = "password") String password) {
@@ -50,6 +50,17 @@ public class UserResource {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public  ResponseEntity<UsuarioDTO> recuperarUsuarioPorId(@PathVariable(value = "id") Long id){
+        return ResponseEntity.ok(gestionUsuario.getUsuario(id));
+    }
+
+    @RequestMapping(value="/{login}/{password}", method = RequestMethod.GET)
+    public ResponseEntity<UsuarioDTO> recuperarUsuarioRegistrado(@PathVariable String login,@PathVariable String password) {
+        UsuarioDTO usuarioDTO = gestionUsuario.getUsuario(login, password);
+        return ResponseEntity.ok(usuarioDTO);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE)
     public String borrrarUsuario(@PathParam(value = "id") String id) {
         gestionUsuario.eliminarUsuario(id);
@@ -61,11 +72,5 @@ public class UserResource {
         gestionUsuario.actualizarUsuario(id);
         return "Usuario actualizado con id:" + id;
     }
-
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public  ResponseEntity<UsuarioDTO> recuperarUsuarioPorId(@PathVariable(value = "id") Long id){
-       return ResponseEntity.ok(gestionUsuario.getUsuario(id));
-    }
-
 
 }

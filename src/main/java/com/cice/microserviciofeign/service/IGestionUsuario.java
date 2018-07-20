@@ -15,6 +15,8 @@ public interface IGestionUsuario {
 
     UsuarioDTO getUsuario(Long idUsuario);
 
+    UsuarioDTO getUsuario(String login, String password);
+
     List<String> listaNombres();
 
     /**
