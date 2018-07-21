@@ -18,5 +18,5 @@ public interface Productos {
     List<Long> getProductos(@PathParam(value = "idUsuario") String idUsuario);
 */
    @RequestMapping(value = "/producto/{idUsuario}",method = RequestMethod.DELETE)
-   ResponseEntity<String> eliminarProductoByIdUsuario(@PathVariable Long idUsuario);
+   ResponseEntity<String> eliminarProductoByIdUsuario(Long id);
 }
