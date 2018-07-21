@@ -41,7 +41,7 @@ public interface IGestionUsuario {
      * @param id
      * @return
      */
-    boolean eliminarUsuario(String id);
+    UsuarioDTO eliminarUsuario(Long id);
 
     List<String> listaUsuarios();
 }

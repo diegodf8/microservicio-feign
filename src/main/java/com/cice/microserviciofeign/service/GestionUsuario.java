@@ -1,8 +1,10 @@
 package com.cice.microserviciofeign.service;
 
 import com.cice.microserviciofeign.entity.Usuario;
+import com.cice.microserviciofeign.feign.Productos;
 import com.cice.microserviciofeign.repository.UsuarioRepository;
 import com.cice.microserviciofeign.rest.dto.UsuarioDTO;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ public class GestionUsuario implements IGestionUsuario{
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    Productos productoFeign;
 
     @Override
     public Long getIdUsuario(String login, String password) {
@@ -52,9 +57,10 @@ public class GestionUsuario implements IGestionUsuario{
     }
 
     @Override
-    public boolean eliminarUsuario(String id) {
-        usuarioRepository.deleteById(Long.parseLong(id));
-        return true;
+    public UsuarioDTO eliminarUsuario(Long id) {
+        usuarioRepository.deleteById(id);
+        productoFeign.eliminarProductoByIdUsuario(id);
+        return null;
     }
 
     @Override

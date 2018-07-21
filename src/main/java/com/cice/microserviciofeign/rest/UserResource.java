@@ -32,7 +32,7 @@ public class UserResource {
    @RequestMapping(value = "health",method = RequestMethod.GET)
     public ResponseEntity<Long> getUsuario(@PathParam(value = "login") String login,
                                            @PathParam(value = "password") String password) {
-        System.out.println(productos.getproductos("1"));
+        //System.out.println(productos.getproductos("1"));
         gestionUsuario.listaUsuarios().stream().forEach(x -> System.out.println("Usuario: " + x));
         //System.out.println(productos.getHello());
         //System.out.println("Lista de productos " + productos.getProductos("1"));
@@ -61,11 +61,12 @@ public class UserResource {
         return ResponseEntity.ok(usuarioDTO);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public String borrrarUsuario(@PathParam(value = "id") String id) {
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<String> elminarUsuarioYTodosSusProductos(@PathVariable Long id){
         gestionUsuario.eliminarUsuario(id);
-        return "Usuario borrado con id: " + id;
+        return ResponseEntity.ok("Todo ha ido ok");
     }
+
 
     @RequestMapping(method = RequestMethod.PUT)
     public String actualizarUsuario(@PathParam(value = "id") String id) {
