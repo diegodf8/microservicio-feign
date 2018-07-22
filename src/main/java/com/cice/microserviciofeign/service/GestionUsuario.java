@@ -47,9 +47,9 @@ public class GestionUsuario implements IGestionUsuario{
     }
 
     @Override
-    public boolean actualizarUsuario(String id) {
+    public boolean actualizarUsuario(Long id) {
         Usuario usuario = new Usuario();
-        usuario = usuarioRepository.getOne(Long.parseLong(id));
+        usuario = usuarioRepository.getOne(id);
         usuario.setPassword("passwordActu");
         System.out.println(usuario.getPassword());
         usuarioRepository.save(usuario);
@@ -59,15 +59,22 @@ public class GestionUsuario implements IGestionUsuario{
     @Override
     public UsuarioDTO eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
-        productoFeign.eliminarProductoByIdUsuario(id);
+        //productoFeign.eliminarProductoByIdUsuario(id);
         return null;
     }
 
     @Override
-    public List<String> listaUsuarios() {
-        return usuarioRepository.findAll().stream().
-                map(usuario -> usuario.getLogin()).
-                collect(Collectors.toList());
+    public List<UsuarioDTO> listaUsuarios() {
+
+        List<UsuarioDTO> collect = usuarioRepository.findAll()
+                .stream()
+                .map(productoentity -> new UsuarioDTO(
+                                productoentity.getId(),
+                                productoentity.getLogin(),
+                                productoentity.getPassword()
+                        )
+                ).collect(Collectors.toList());
+        return collect ;
 
     }
 

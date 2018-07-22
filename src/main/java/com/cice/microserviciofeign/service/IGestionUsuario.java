@@ -33,7 +33,7 @@ public interface IGestionUsuario {
      * @param id
      * @return
      */
-    boolean actualizarUsuario(String id);
+    boolean actualizarUsuario(Long id);
 
     /**
      * Metodo para eliminar un usuario de base de datos
@@ -43,6 +43,6 @@ public interface IGestionUsuario {
      */
     UsuarioDTO eliminarUsuario(Long id);
 
-    List<String> listaUsuarios();
+    List<UsuarioDTO> listaUsuarios();
 }
 
