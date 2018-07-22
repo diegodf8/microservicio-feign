@@ -6,6 +6,7 @@ import com.cice.microserviciofeign.repository.UsuarioRepository;
 import com.cice.microserviciofeign.rest.dto.UsuarioDTO;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,7 +60,8 @@ public class GestionUsuario implements IGestionUsuario{
     @Override
     public UsuarioDTO eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
-        //productoFeign.eliminarProductoByIdUsuario(id);
+        productoFeign.eliminarProductoByIdUsuario(id);
+        System.out.println("Usuario eliminado por id y sus productos: " + id);
         return null;
     }
 
