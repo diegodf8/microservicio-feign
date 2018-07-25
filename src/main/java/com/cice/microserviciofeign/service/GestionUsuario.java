@@ -5,6 +5,7 @@ import com.cice.microserviciofeign.feign.Productos;
 import com.cice.microserviciofeign.repository.UsuarioRepository;
 import com.cice.microserviciofeign.rest.dto.UsuarioDTO;
 import com.netflix.discovery.converters.Auto;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,10 +59,15 @@ public class GestionUsuario implements IGestionUsuario{
     }
 
     @Override
+    @HystrixCommand(fallbackMethod = "eliminarUsuarioDefault")
     public UsuarioDTO eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
         productoFeign.eliminarProductoByIdUsuario(id);
         System.out.println("Usuario eliminado por id y sus productos: " + id);
+        return null;
+    }
+
+    public UsuarioDTO eliminarUsuarioDefault(Long id){
         return null;
     }
 
